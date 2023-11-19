@@ -6,9 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     #region Variables
     // floats
-    private float moveSpeed = 10f;
+    private float moveSpeed = 9f;
     private float horizontalMovement = 0f;
-    private float jumpingPower = 10f;
+    private float jumpingPower = 13f;
 
     // rigidbodies
     private Rigidbody2D rb = null;
