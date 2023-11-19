@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 9f;
     private float horizontalMovement = 0f;
     private float jumpingPower = 13f;
+    private float coyoteTime = 0.15f;
+    private float coyoteTimeCounter = 0f;
 
     // rigidbodies
     private Rigidbody2D rb = null;
@@ -37,10 +39,25 @@ public class PlayerController : MonoBehaviour
     // update function to gather player input - this function is called every frame
     private void Update()
     {
+        /* Coyote timing - this section of code is to create a coyote time jump, this should make
+        the game smoother.  if we are grounded we set the counter to the time, if we are not 
+        grounded we take time.deltatime away from the counter, this basically means we are taking 
+        a second away from the counter every frame, we can only jump if we have a greater counter
+        than 0 and then we set the counter to 0 to prevent double jumping. */
+
+        if (isGrounded == true)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
         // player sideways movement input
         horizontalMovement = Input.GetAxis("Horizontal");
         // player jump input - if space is pressed execute this code
-        if (Input.GetButtonDown("Jump") && isGrounded == true)
+        if (Input.GetButtonDown("Jump") && coyoteTimeCounter > 0)
         {
             // change y value of the vector2 to jumping power
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
@@ -49,13 +66,13 @@ public class PlayerController : MonoBehaviour
             // jump animation
             animator.SetBool("isJumping", !isGrounded);
         }
-        /* player smoother jump input
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-        {
-            // when space bar is pressed down fully, you jump higher than if you just tap it
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }*/
 
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0.0f)
+        {
+            coyoteTimeCounter = 0.0f;
+        }
+
+        #region Checking for Flip
         if (horizontalMovement > 0 && !facingRight)
         {
             Flip();
@@ -65,6 +82,7 @@ public class PlayerController : MonoBehaviour
         {
             Flip();
         }
+        #endregion
     }
     #endregion
     #region FixedUpdate
