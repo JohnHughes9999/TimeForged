@@ -10,32 +10,26 @@ public class PlayerController : MonoBehaviour
     private float horizontalMovement = 0f;
     private float jumpingPower = 10f;
 
-    // ints
-
     // rigidbodies
-    private Rigidbody2D rb;
-
-    // trail renderers
-
-    // bools
-    private bool isGrounded = true;
-
-    // vector2s
-
-    // vector3s
-
-    // serialize fields
+    private Rigidbody2D rb = null;
 
     // animators
     private Animator animator;
+
+    // bools
+    private bool isGrounded = true;
+    private bool facingRight = true;
+
+    // vector3s
+    private Vector3 currentScale = new Vector3(0, 0, 0);
     #endregion
     #region Awake
     // this is called when the script is initialised, this is called before the start function
     private void Awake()
     {
-        // storing the rigidbody component in a variable
+        /* this is where we store components in variables */
+
         rb = GetComponent<Rigidbody2D>();
-        // store animator component in animator variable
         animator = GetComponent<Animator>();
     }
     #endregion
@@ -61,6 +55,16 @@ public class PlayerController : MonoBehaviour
             // when space bar is pressed down fully, you jump higher than if you just tap it
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }*/
+
+        if (horizontalMovement > 0 && !facingRight)
+        {
+            Flip();
+        }
+
+        if (horizontalMovement < 0 && facingRight)
+        {
+            Flip();
+        }
     }
     #endregion
     #region FixedUpdate
@@ -83,6 +87,26 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
         // enable jump animation
         animator.SetBool("isJumping", isGrounded == false);
+    }
+    #endregion
+    #region Method - Flip
+    // method to flip player sprite - should be called in update so that it checks every frame
+    private void Flip()
+    {
+        /* this method is used to flip the player i will call it in update and if the
+        player is moving right and facing left as well as when the player is moving left
+        but facing right, this way the player should always be facing the right way */
+
+        /* current scale is a vector 3 that includes the current scale of the player, e.g
+        x,y & z values. it then changes the x value in current state to *-1 which means it
+        flips the character, because 1 times -1 is -1 and -1 times -1 is 1, then we set the
+        scale of the player to the new current scale and change the facing right bool to
+        the opposite */
+
+        currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+        facingRight = !facingRight;
     }
     #endregion
 }
