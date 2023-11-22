@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     // update function to gather player input - this function is called every frame
     private void Update()
     {
-        /* Coyote timing - this section of code is to create a coyote time jump, this should make
+       /* Coyote timing - this section of code is to create a coyote time jump, this should make
         the game smoother.  if we are grounded we set the counter to the time, if we are not 
         grounded we take time.deltatime away from the counter, this basically means we are taking 
         a second away from the counter every frame, we can only jump if we have a greater counter
@@ -111,11 +111,11 @@ public class PlayerController : MonoBehaviour
     // method to flip player sprite - should be called in update so that it checks every frame
     private void Flip()
     {
-        /* this method is used to flip the player i will call it in update and if the
+       /* this method is used to flip the player i will call it in update and if the
         player is moving right and facing left as well as when the player is moving left
         but facing right, this way the player should always be facing the right way */
 
-        /* current scale is a vector 3 that includes the current scale of the player, e.g
+       /* current scale is a vector 3 that includes the current scale of the player, e.g
         x,y & z values. it then changes the x value in current state to *-1 which means it
         flips the character, because 1 times -1 is -1 and -1 times -1 is 1, then we set the
         scale of the player to the new current scale and change the facing right bool to
