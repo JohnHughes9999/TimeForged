@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     // floats
     private float moveSpeed = 9f;
     private float horizontalMovement = 0f;
-    private float jumpingPower = 13f;
-    private float coyoteTime = 0.15f;
+    private float jumpingPower = 16f;
+    private float coyoteTime = 0.01f;
     private float coyoteTimeCounter = 0f;
 
     // rigidbodies
