@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     #region Variables
     // floats
-    private float moveSpeed = 9f;
+    private float moveSpeed = 10f;
     private float horizontalMovement = 0f;
-    private float jumpingPower = 16f;
+    private float jumpingPower = 18f;
 
     // rigidbodies
     private Rigidbody2D rb = null;
